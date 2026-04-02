@@ -1,5 +1,6 @@
 /* ========================================
    Rob Weidner — Hyperagent + Airtable
+   Texas Edition
    ======================================== */
 
 * {
@@ -9,17 +10,19 @@
 }
 
 :root {
-  --bg: #09090b;
-  --bg-elevated: #131316;
-  --bg-card: #18181b;
-  --border: #27272a;
-  --text: #fafafa;
-  --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
-  --accent: #818cf8;
-  --accent-glow: rgba(129, 140, 248, 0.15);
+  --bg: #1a1510;
+  --bg-elevated: #211c14;
+  --bg-card: #2a2318;
+  --border: #3d3428;
+  --text: #faf5ee;
+  --text-secondary: #c4b59a;
+  --text-muted: #8c7e6a;
+  --accent: #cf6a2c;
+  --accent-light: #e8944e;
+  --accent-glow: rgba(207, 106, 44, 0.15);
+  --star-gold: #d4a843;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'Playfair Display', Georgia, serif;
+  --font-display: 'Bitter', Georgia, serif;
 }
 
 html {
@@ -61,7 +64,7 @@ body {
   z-index: 100;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  background: rgba(9, 9, 11, 0.8);
+  background: rgba(26, 21, 16, 0.85);
   border-bottom: 1px solid var(--border);
 }
 
@@ -76,10 +79,19 @@ body {
 }
 
 .nav-logo {
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 1.125rem;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.02em;
   color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-logo .lone-star {
+  color: var(--star-gold);
+  font-size: 1rem;
 }
 
 .nav-links {
@@ -96,7 +108,7 @@ body {
 }
 
 .nav-links a:hover {
-  color: var(--text);
+  color: var(--accent-light);
 }
 
 .nav-toggle {
@@ -160,10 +172,18 @@ button:focus-visible {
 .hero-label {
   font-size: 0.8125rem;
   font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-light);
   margin-bottom: 1.5rem;
+}
+
+.hero-star {
+  display: block;
+  font-size: 2.5rem;
+  color: var(--star-gold);
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 30px rgba(212, 168, 67, 0.3);
 }
 
 .hero-title {
@@ -171,9 +191,9 @@ button:focus-visible {
   font-size: clamp(3.5rem, 8vw, 6rem);
   font-weight: 700;
   line-height: 1.05;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+  background: linear-gradient(135deg, #faf5ee 0%, #c4b59a 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -191,9 +211,9 @@ button:focus-visible {
   top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(ellipse, rgba(207, 106, 44, 0.12) 0%, rgba(212, 168, 67, 0.06) 40%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -219,13 +239,13 @@ button:focus-visible {
 
 .btn-primary {
   background: var(--accent);
-  color: #09090b;
+  color: #faf5ee;
 }
 
 .btn-primary:hover {
-  background: #6366f1;
+  background: #b85a24;
   transform: translateY(-1px);
-  box-shadow: 0 4px 20px rgba(129, 140, 248, 0.3);
+  box-shadow: 0 4px 24px rgba(207, 106, 44, 0.35);
 }
 
 .btn-ghost {
@@ -242,7 +262,7 @@ button:focus-visible {
 .section-label {
   font-size: 0.8125rem;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
   margin-bottom: 1rem;
@@ -253,7 +273,7 @@ button:focus-visible {
   font-size: clamp(2rem, 4vw, 2.75rem);
   font-weight: 700;
   line-height: 1.25;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   margin-bottom: 3rem;
 }
 
@@ -278,7 +298,7 @@ button:focus-visible {
 }
 
 .about-card:hover {
-  border-color: var(--text-muted);
+  border-color: var(--accent);
   transform: translateY(-2px);
 }
 
@@ -288,6 +308,7 @@ button:focus-visible {
 }
 
 .about-card h3 {
+  font-family: var(--font-display);
   font-size: 1.125rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
@@ -321,7 +342,7 @@ button:focus-visible {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--accent), #a78bfa, #818cf8);
+  background: linear-gradient(90deg, var(--accent), var(--star-gold), var(--accent));
 }
 
 .work-badge {
@@ -342,7 +363,7 @@ button:focus-visible {
   font-size: 2.25rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
 .work-desc {
@@ -383,7 +404,7 @@ button:focus-visible {
 }
 
 .work-card:hover {
-  border-color: var(--text-muted);
+  border-color: var(--accent);
   transform: translateY(-2px);
 }
 
@@ -404,6 +425,7 @@ a.work-card:hover .card-arrow {
 }
 
 .work-card h3 {
+  font-family: var(--font-display);
   font-size: 1.125rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
@@ -509,8 +531,8 @@ a.work-card:hover .card-arrow {
 }
 
 .contact-link:hover {
-  color: var(--text);
-  border-color: var(--text-muted);
+  color: var(--accent-light);
+  border-color: var(--accent);
   transform: translateY(-2px);
 }
 
@@ -529,6 +551,10 @@ a.work-card:hover .card-arrow {
 .footer p {
   font-size: 0.8125rem;
   color: var(--text-muted);
+}
+
+.footer .lone-star {
+  color: var(--star-gold);
 }
 
 @media (max-width: 640px) {
@@ -562,7 +588,7 @@ a.work-card:hover .card-arrow {
     top: 64px;
     left: 0;
     right: 0;
-    background: rgba(9, 9, 11, 0.95);
+    background: rgba(26, 21, 16, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
