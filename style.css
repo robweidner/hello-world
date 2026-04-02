@@ -10,8 +10,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fafafa;
-  color: #111;
+  background: #0a0a0a;
+  color: #e0e0e0;
 }
 
 main {
@@ -44,12 +44,12 @@ h1 {
 
 p {
   font-size: 1.125rem;
-  color: #444;
+  color: #aaa;
   margin-bottom: 0.25rem;
 }
 
 .subtle {
   font-size: 0.875rem;
-  color: #888;
+  color: #666;
   margin-top: 1rem;
 }
