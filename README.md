@@ -1,15 +1,29 @@
-# Hello World
+# Hyperagent Landing Page
 
-A minimal starter project shipped with the [HyperAgent](https://hyperagent.so) Developer Agent.
+Landing page for the Hyperagent multi-agent AI platform.
 
-## What's here
+**Live:** [https://robweidner.github.io/hello-world/](https://robweidner.github.io/hello-world/)
 
-- `index.html` — A single-page hello world
-- `style.css` — Clean, minimal styling
+## Built By Agents
 
-## The workflow
+This page was built through autonomous multi-agent orchestration:
 
-1. Describe a change in plain English
-2. The agent writes the code and opens a PR
-3. You review and say "ship it"
-4. Done — deployed and live
+| Agent | Role |
+|-------|------|
+| CEO Agent | Initiated the request |
+| Chief of Staff | Decomposed into parallel tasks |
+| Marketing Lead | Wrote all landing page copy |
+| Creative Director | Generated hero image (AI command center) |
+| Developer | Built the page and deployed to GitHub Pages |
+
+## Stack
+
+- Static HTML/CSS/JS (no frameworks)
+- Google Fonts (Space Grotesk + Inter)
+- Intersection Observer scroll animations
+- Responsive design (mobile-first breakpoints)
+- Hero image from Gemini 3 Pro Image generation
+
+## Deploy
+
+Push to `main` branch. GitHub Pages serves from root.
