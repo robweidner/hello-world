@@ -1,213 +1,867 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rob Weidner — Building with Hyperagent</title>
-  <meta name="description" content="Airtable-native builder. Helping the Hyperagent team bridge AI agents with the tools teams actually use.">
-  <!-- Open Graph / Social -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Rob Weidner — Building with Hyperagent">
-  <meta property="og:description" content="Airtable-native builder. Helping the Hyperagent team bridge AI agents with the tools teams actually use.">
-  <meta property="og:url" content="https://pastel-bodhi-6tpv.here.now/">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Rob Weidner — Building with Hyperagent">
-  <meta name="twitter:description" content="Airtable-native builder. Helping the Hyperagent team bridge AI agents with the tools teams actually use.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperagent — Your AI Team Is Already Built</title>
+    <meta name="description" content="Hyperagent is a fully autonomous AI workforce — seven specialized agents that coordinate, execute, and deliver real work.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-deep: #060a14;
+            --bg-primary: #0a0e1a;
+            --bg-card: #111827;
+            --bg-card-hover: #1a2236;
+            --accent-blue: #00d4ff;
+            --accent-cyan: #06b6d4;
+            --accent-purple: #8b5cf6;
+            --accent-gold: #f59e0b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --glow-blue: rgba(0, 212, 255, 0.15);
+            --glow-purple: rgba(139, 92, 246, 0.15);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background: var(--bg-deep);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.1;
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s, backdrop-filter 0.3s;
+        }
+
+        nav.scrolled {
+            background: rgba(6, 10, 20, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .nav-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-logo .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--accent-blue); }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            color: var(--bg-deep) !important;
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600 !important;
+            transition: transform 0.2s, box-shadow 0.2s !important;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px var(--glow-blue);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('https://pub.staging-hyperagent.com/api/published/1CAeuviU7crr94YZqaOZ0w/0a3e9d45-46ca-4590-acab-ac86989d144a.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(6, 10, 20, 0.4) 0%,
+                rgba(6, 10, 20, 0.6) 40%,
+                rgba(6, 10, 20, 0.85) 75%,
+                var(--bg-deep) 100%
+            );
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--accent-blue);
+            margin-bottom: 2rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .hero-badge .pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: clamp(1.05rem, 2vw, 1.3rem);
+            color: var(--text-secondary);
+            max-width: 680px;
+            margin: 0 auto 1rem;
+            line-height: 1.7;
+        }
+
+        .hero-tagline {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            margin-bottom: 2.5rem;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            color: var(--bg-deep);
+            padding: 0.9rem 2rem;
+            border-radius: 12px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--glow-blue);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            color: var(--text-primary);
+            padding: 0.9rem 2rem;
+            border-radius: 12px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid var(--border-subtle);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-blue);
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        /* ===== SECTIONS SHARED ===== */
+        section {
+            padding: 7rem 2rem;
+            position: relative;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ===== HOW IT WORKS ===== */
+        .how-it-works {
+            background: var(--bg-primary);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            position: relative;
+        }
+
+        .steps-grid::before {
+            content: '';
+            position: absolute;
+            top: 3rem;
+            left: calc(12.5% + 1rem);
+            right: calc(12.5% + 1rem);
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-cyan), var(--accent-blue));
+            opacity: 0.3;
+        }
+
+        .step-card {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-card:nth-child(1) .step-number {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(0, 212, 255, 0.05));
+            color: var(--accent-blue);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+        .step-card:nth-child(2) .step-number {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(139, 92, 246, 0.05));
+            color: var(--accent-purple);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        .step-card:nth-child(3) .step-number {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(6, 182, 212, 0.05));
+            color: var(--accent-cyan);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+        .step-card:nth-child(4) .step-number {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05));
+            color: var(--accent-gold);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .step-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ===== AGENT ROSTER ===== */
+        .agent-roster {
+            background: var(--bg-deep);
+        }
+
+        .roster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .agent-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .agent-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .agent-card:hover {
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .agent-card:hover::before { opacity: 1; }
+
+        .agent-card:nth-child(1)::before { background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan)); }
+        .agent-card:nth-child(2)::before { background: linear-gradient(90deg, var(--accent-purple), #a78bfa); }
+        .agent-card:nth-child(3)::before { background: linear-gradient(90deg, #10b981, #34d399); }
+        .agent-card:nth-child(4)::before { background: linear-gradient(90deg, var(--accent-gold), #fbbf24); }
+        .agent-card:nth-child(5)::before { background: linear-gradient(90deg, #f43f5e, #fb7185); }
+        .agent-card:nth-child(6)::before { background: linear-gradient(90deg, var(--accent-cyan), #22d3ee); }
+        .agent-card:nth-child(7)::before { background: linear-gradient(90deg, #6366f1, #818cf8); }
+
+        .agent-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .agent-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .agent-card:nth-child(1) .agent-icon { background: rgba(0, 212, 255, 0.1); }
+        .agent-card:nth-child(2) .agent-icon { background: rgba(139, 92, 246, 0.1); }
+        .agent-card:nth-child(3) .agent-icon { background: rgba(16, 185, 129, 0.1); }
+        .agent-card:nth-child(4) .agent-icon { background: rgba(245, 158, 11, 0.1); }
+        .agent-card:nth-child(5) .agent-icon { background: rgba(244, 63, 94, 0.1); }
+        .agent-card:nth-child(6) .agent-icon { background: rgba(6, 182, 212, 0.1); }
+        .agent-card:nth-child(7) .agent-icon { background: rgba(99, 102, 241, 0.1); }
+
+        .agent-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .agent-role {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .agent-card > p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            background: var(--bg-primary);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, var(--glow-blue) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-size: clamp(2rem, 4.5vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-content p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border-subtle);
+            text-align: center;
+            background: var(--bg-deep);
+        }
+
+        .footer-tagline {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .footer-tagline span {
+            color: var(--accent-blue);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+        .reveal-delay-5 { transition-delay: 0.5s; }
+        .reveal-delay-6 { transition-delay: 0.6s; }
+        .reveal-delay-7 { transition-delay: 0.7s; }
+
+        /* ===== GRID BACKGROUND ===== */
+        .grid-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        /* ===== MOBILE NAV ===== */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .steps-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+            .steps-grid::before { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 1rem; }
+
+            .nav-toggle { display: block; }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: rgba(6, 10, 20, 0.95);
+                backdrop-filter: blur(20px);
+                padding: 1.5rem;
+                gap: 1rem;
+                border-bottom: 1px solid var(--border-subtle);
+            }
+
+            .nav-links.open { display: flex; }
+
+            .hero-content { padding: 0 1.5rem; }
+
+            .hero h1 { font-size: 2.2rem; }
+
+            section { padding: 4rem 1.5rem; }
+
+            .steps-grid { grid-template-columns: 1fr; }
+
+            .roster-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.8rem; }
+            .hero-sub { font-size: 0.95rem; }
+            .hero-ctas { flex-direction: column; align-items: center; }
+            .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+        }
+    </style>
 </head>
 <body>
-
-  <!-- Nav -->
-  <nav class="nav">
-    <div class="nav-inner">
-      <span class="nav-logo"><span class="lone-star">★</span> RW</span>
-      <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-      </button>
-      <div class="nav-links">
-        <a href="#about">About</a>
-        <a href="#work">Work</a>
-        <a href="#hyperagent">Hyperagent</a>
-        <a href="#contact">Contact</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-content">
-      <span class="hero-star">★</span>
-      <p class="hero-label">Airtable Builder &middot; Hyperagent Team &middot; Austin, TX</p>
-      <h1 class="hero-title">Rob Weidner</h1>
-      <p class="hero-subtitle">Helping the Hyperagent team bridge AI agents<br>with the tools teams actually use.</p>
-      <div class="hero-cta">
-        <a href="#work" class="btn btn-primary">See My Work</a>
-        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
-      </div>
-    </div>
-    <div class="hero-gradient"></div>
-  </section>
-
-  <!-- About -->
-  <section id="about" class="section about">
-    <div class="container">
-      <p class="section-label">About</p>
-      <h2 class="section-title">I build systems that connect<br>Airtable to <em>everything.</em></h2>
-      <div class="about-grid">
-        <div class="about-card">
-          <div class="about-icon">&#128736;</div>
-          <h3>Airtable-Native</h3>
-          <p>Deep expertise building on Airtable — from complex relational schemas to custom integrations that connect bases to enterprise workflows.</p>
-        </div>
-        <div class="about-card">
-          <div class="about-icon">&#9889;</div>
-          <h3>Integration Architecture</h3>
-          <p>Built platforms connecting Airtable with CRMs, ERPs, and internal tools for organizations like the Gates Foundation and Duke Energy.</p>
-        </div>
-        <div class="about-card">
-          <div class="about-icon">&#129302;</div>
-          <h3>AI + Airtable</h3>
-          <p>Now at the intersection of AI agents and structured data — making Airtable the connective tissue between teams and intelligent automation.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Work -->
-  <section id="work" class="section work">
-    <div class="container">
-      <p class="section-label">Work</p>
-      <h2 class="section-title">Enterprise Airtable at scale</h2>
-
-      <div class="work-featured">
-        <div class="work-badge">Current Focus</div>
-        <h3 class="work-name">Hyperagent</h3>
-        <p class="work-desc">Helping build the agent platform that connects AI to real workflows. Hyperagent's agents read, write, and act on data across 500+ integrations — with Airtable as a first-class citizen.</p>
-        <div class="work-tags">
-          <span>AI Agents</span>
-          <span>Integrations</span>
-          <span>Airtable</span>
-          <span>Developer Tools</span>
-        </div>
-      </div>
-
-      <div class="work-grid">
-        <a href="https://github.com/robweidner/claribase" class="work-card" target="_blank" rel="noopener">
-          <h3>Claribase <span class="card-arrow">&rarr;</span></h3>
-          <p>Consulting and integration platform — connecting Airtable bases to CRMs, ERPs, and enterprise systems for organizations like the Gates Foundation and Duke Energy.</p>
-          <div class="work-tags">
-            <span>Airtable</span>
-            <span>Enterprise</span>
-          </div>
+    <!-- NAV -->
+    <nav id="navbar">
+        <a href="#" class="nav-logo">
+            <span class="logo-icon">H</span>
+            Hyperagent
         </a>
-        <div class="work-card">
-          <h3>Airtable Ecosystem</h3>
-          <p>Years of building custom Airtable solutions — automations, scripting extensions, sync integrations, and relational architectures that teams actually adopt.</p>
-          <div class="work-tags">
-            <span>Automations</span>
-            <span>Scripting</span>
-          </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#agents">Agents</a></li>
+            <li><a href="#cta" class="nav-cta">Get Started</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-badge reveal">
+                <span class="pulse"></span>
+                7 Agents Online
+            </div>
+            <h1 class="reveal reveal-delay-1">Your AI team is already built. They're waiting for orders.</h1>
+            <p class="hero-sub reveal reveal-delay-2">Hyperagent is a fully autonomous AI workforce — seven specialized agents that coordinate, execute, and deliver real work. No babysitting. No prompt chains. Just results.</p>
+            <p class="hero-tagline reveal reveal-delay-3">One command. Seven agents. Infinite leverage.</p>
+            <div class="hero-ctas reveal reveal-delay-4">
+                <a href="#cta" class="btn-primary">See It In Action <span>&rarr;</span></a>
+                <a href="#agents" class="btn-secondary">Meet the Team</a>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Hyperagent -->
-  <section id="hyperagent" class="section hyperagent-section">
-    <div class="container">
-      <p class="section-label">Why Hyperagent</p>
-      <h2 class="section-title">AI agents that work with<br><em>your actual tools.</em></h2>
-      <div class="ha-grid">
-        <div class="ha-card">
-          <div class="ha-number">500+</div>
-          <p>Native integrations — Airtable, Slack, GitHub, Google Workspace, Jira, and more. Agents connect to real workflows, not toy demos.</p>
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="grid-bg"></div>
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-label reveal">How It Works</p>
+                <h2 class="reveal reveal-delay-1">You give the order. They run the play.</h2>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card reveal reveal-delay-1">
+                    <div class="step-number">01</div>
+                    <h3>Dispatch</h3>
+                    <p>Tell the CEO Agent what you need. A landing page. A competitive analysis. A full product launch. One message kicks off the entire machine.</p>
+                </div>
+                <div class="step-card reveal reveal-delay-2">
+                    <div class="step-number">02</div>
+                    <h3>Coordinate</h3>
+                    <p>The Chief of Staff decomposes your request into discrete tasks, assigns each to the right specialist, and manages dependencies. Think air traffic control for AI.</p>
+                </div>
+                <div class="step-card reveal reveal-delay-3">
+                    <div class="step-number">03</div>
+                    <h3>Execute</h3>
+                    <p>Specialist agents work in parallel — the Developer ships code, Marketing drafts copy, Creative generates visuals, QA stress-tests everything.</p>
+                </div>
+                <div class="step-card reveal reveal-delay-4">
+                    <div class="step-number">04</div>
+                    <h3>Deliver</h3>
+                    <p>Results flow back through the chain — quality-checked, coordinated, and tracked in your command center. You review. They iterate. Ship faster than any human team.</p>
+                </div>
+            </div>
         </div>
-        <div class="ha-card">
-          <div class="ha-number">0→Live</div>
-          <p>From idea to deployed agent in minutes. Build, test, and ship AI workflows from a conversation — no infrastructure required.</p>
+    </section>
+
+    <!-- AGENT ROSTER -->
+    <section class="agent-roster" id="agents">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-label reveal">Agent Roster</p>
+                <h2 class="reveal reveal-delay-1">Meet the team that never sleeps.</h2>
+                <p class="reveal reveal-delay-2">Seven AI specialists. Each one purpose-built. All of them coordinated.</p>
+            </div>
+            <div class="roster-grid">
+                <div class="agent-card reveal reveal-delay-1">
+                    <div class="agent-header">
+                        <div class="agent-icon">&#127919;</div>
+                        <div>
+                            <div class="agent-name">CEO Agent</div>
+                            <div class="agent-role">The Orchestrator</div>
+                        </div>
+                    </div>
+                    <p>The brain of the operation. Receives your intent, makes executive decisions, and dispatches work across the entire team. Your strategic layer — it doesn't just delegate, it thinks.</p>
+                </div>
+                <div class="agent-card reveal reveal-delay-2">
+                    <div class="agent-header">
+                        <div class="agent-icon">&#128203;</div>
+                        <div>
+                            <div class="agent-name">Chief of Staff</div>
+                            <div class="agent-role">The Coordinator</div>
+                        </div>
+                    </div>
+                    <p>Triages priorities, decomposes complex requests into actionable tasks, runs daily briefings, and keeps every agent in sync. The connective tissue that makes autonomous orchestration work.</p>
+                </div>
+                <div class="agent-card reveal reveal-delay-3">
+                    <div class="agent-header">
+                        <div class="agent-icon">&#128187;</div>
+                        <div>
+                            <div class="agent-name">Developer</div>
+                            <div class="agent-role">The Builder</div>
+                        </div>
+                    </div>
+                    <p>Writes code, manages repos, ships deployments, debugs production issues. Full-stack execution from GitHub commits to live infrastructure. If it touches a codebase, this agent owns it.</p>
+                </div>
+                <div class="agent-card reveal reveal-delay-4">
+                    <div class="agent-header">
+                        <div class="agent-icon">&#128227;</div>
+                        <div>
+                            <div class="agent-name">Marketing Lead</div>
+                            <div class="agent-role">The Voice</div>
+                        </div>
+                    </div>
+                    <p>Drafts content, plans campaigns, writes in your voice, manages social presence across platforms. From blog posts to launch copy — this agent makes sure you're heard.</p>
+                </div>
+                <div class="agent-card reveal reveal-delay-5">
+                    <div class="agent-header">
+                        <div class="agent-icon">&#127912;</div>
+                        <div>
+                            <div class="agent-name">Creative Director</div>
+                            <div class="agent-role">The Eye</div>
+                        </div>
+                    </div>
+                    <p>Generates AI imagery, designs brand visuals, creates infographics and promotional graphics. Every pixel intentional, every asset on-brand. Visual storytelling at machine speed.</p>
+                </div>
+                <div class="agent-card reveal reveal-delay-6">
+                    <div class="agent-header">
+                        <div class="agent-icon">&#128269;</div>
+                        <div>
+                            <div class="agent-name">UX/QA Lead</div>
+                            <div class="agent-role">The Critic</div>
+                        </div>
+                    </div>
+                    <p>Tests everything, audits accessibility, validates cross-browser compatibility, catches what everyone else missed. The agent that refuses to let "good enough" ship.</p>
+                </div>
+                <div class="agent-card reveal reveal-delay-7">
+                    <div class="agent-header">
+                        <div class="agent-icon">&#128202;</div>
+                        <div>
+                            <div class="agent-name">Operations Monitor</div>
+                            <div class="agent-role">The Watchdog</div>
+                        </div>
+                    </div>
+                    <p>Tracks agent health, monitors performance metrics, flags anomalies before they become problems. Keeps the fleet running clean so you never have to think about uptime.</p>
+                </div>
+            </div>
         </div>
-        <div class="ha-card">
-          <div class="ha-number">24/7</div>
-          <p>Agents that run on schedules, respond in Slack, and compound knowledge over time. They get better the more your team uses them.</p>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="cta">
+        <div class="section-container">
+            <div class="cta-content">
+                <p class="section-label reveal">Ready?</p>
+                <h2 class="reveal reveal-delay-1">Stop prompting. Start commanding.</h2>
+                <p class="reveal reveal-delay-2">Hyperagent isn't another chatbot with a fancy wrapper. It's a coordinated AI workforce that turns your intentions into executed deliverables — code shipped, content published, designs delivered, quality verified. Automatically.</p>
+                <div class="cta-buttons reveal reveal-delay-3">
+                    <a href="#" class="btn-primary">See It In Action <span>&rarr;</span></a>
+                    <a href="#" class="btn-secondary">Build Your Team</a>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="ha-cta">
-        <p class="ha-note">This page was built, committed to GitHub, and deployed to a live URL — entirely by a Hyperagent dev agent, from a chat conversation.</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Contact -->
-  <section id="contact" class="section contact">
-    <div class="container">
-      <p class="section-label">Contact</p>
-      <h2 class="section-title">Let's talk.</h2>
-      <p class="contact-text">Interested in how AI agents can supercharge Airtable workflows? I'd love to show you what we're building.</p>
-      <div class="contact-links">
-        <a href="https://github.com/robweidner" class="contact-link" target="_blank" rel="noopener" aria-label="GitHub profile">
-          <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          <span>GitHub</span>
-        </a>
-        <a href="https://robweidner.com" class="contact-link" target="_blank" rel="noopener" aria-label="Personal website">
-          <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-          <span>Website</span>
-        </a>
-        <a href="mailto:me@robweidner.com" class="contact-link" aria-label="Send email">
-          <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,7 12,13 2,7"/></svg>
-          <span>Email</span>
-        </a>
-      </div>
-    </div>
-  </section>
+    <!-- FOOTER -->
+    <footer>
+        <p class="footer-tagline">Built by builders. Powered by agents. <span>Shipping daily.</span></p>
+    </footer>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <p>Built and deployed by a Hyperagent dev agent <span class="lone-star">★</span> from a chat conversation.</p>
-    </div>
-  </footer>
+    <!-- JS -->
+    <script>
+        // Navbar scroll effect
+        const nav = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
 
-  <script>
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-      });
-    });
+        // Mobile nav toggle
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+        });
 
-    // Fade-in on scroll
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
+        // Close mobile nav on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => navLinks.classList.remove('open'));
+        });
 
-    document.querySelectorAll('.section').forEach(s => observer.observe(s));
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
 
-    // Mobile nav toggle
-    const toggle = document.querySelector('.nav-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    toggle.addEventListener('click', () => {
-      const open = navLinks.classList.toggle('open');
-      toggle.classList.toggle('active');
-      toggle.setAttribute('aria-expanded', open);
-    });
-    navLinks.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-        toggle.classList.remove('active');
-        toggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-  </script>
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
